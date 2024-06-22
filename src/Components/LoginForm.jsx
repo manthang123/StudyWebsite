@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,14 +16,10 @@ const LoginForm = (props) => {
     });
 
     function changeHandler(event) {
-        setFormData([
-            (prev) => [
-                {
-                    ...prev,
-                    [event.target.name]: event.target.value,
-                },
-            ],
-        ]);
+        setFormData(prev => ({
+            ...prev,
+            [event.target.name]: event.target.value,
+        }));
     }
 
     function submitHandler(e) {
