@@ -11,13 +11,13 @@ function Navbar({ isLoggedIn, setLoggedIn }) {
   };
 
   return (
-    <div className="flex justify-between items-center px-4 py-3 bg-white shadow-md">
+    <div className="flex justify-between item-center w-11/12 max-w-[1160pw] py-4 mx-auto">
       <Link to="/">
         <img src={logo} alt="Logo" height={32} width={160} loading="lazy" />
       </Link>
 
       <nav>
-        <ul className="flex gap-5 text-richblack-100">
+        <ul className="text-richblack-100 flex gap-x-6">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -30,24 +30,28 @@ function Navbar({ isLoggedIn, setLoggedIn }) {
         </ul>
       </nav>
 
-      <div className="flex gap-3">
+      <div className="flex items-center gap-x-4">
         {!isLoggedIn && (
           <Link to="/login">
-            <button>Login</button>
+            <button className="bg-richblack-700 text-richblack-100 py-1 px-3 mt-2 rounded-md border border-richblack-700">
+            Login</button>
           </Link>
         )}
         {isLoggedIn && (
           <Link to="/dashboard">
-            <button>Dashboard</button>
+                       <button className="bg-richblack-700 text-richblack-100 py-1 px-3 mt-2 rounded-md border border-richblack-700">
+                       Dashboard</button>
           </Link>
         )}
         {!isLoggedIn && (
           <Link to="/signup">
-            <button>Signup</button>
+                        <button className="bg-richblack-700 text-richblack-100 py-1 px-3 mt-2 rounded-md border border-richblack-700">
+                        Signup</button>
           </Link>
         )}
         {isLoggedIn && (
-          <button onClick={handleLogout}>
+       <button className="bg-richblack-700 text-richblack-100e py-1 px-3 mt-2 
+       rounded-md border border-richblack-700"  onClick={handleLogout}> 
             Log Out
           </button>
         )}

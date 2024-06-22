@@ -1,141 +1,189 @@
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-function SignupForm({ setLoggedIn }) {
+const SignupForm = (props) => {
+  const setLoggedIn = props.setLoggedIn;
+
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+
+  const [showCreatePass, setShowCreatePass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [accountType, setAccountType] = useState("student");
+
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const handleInputChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value.trim(), // Trim leading/trailing spaces
-    });
-  };
+  function changeHandler(event) {
+    setFormData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    // Validate password match
+  function submitHandler(e) {
+    e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
 
-    // Simulate backend API call or perform actual logic
-    setLoggedIn(true); // Update login state
-    toast.success("Account created successfully");
+    setLoggedIn(true);
+    toast.success("Account Created");
+    const accountData = {
+      ...formData,
+    };
+    console.log(accountData);
 
-    // Navigate to dashboard
     navigate("/dashboard");
-
-    // Clear form data
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
-  };
+  }
 
   return (
     <div>
-      <div>
-        {/* Example role selection buttons */}
-        <button>Student</button>
-        <button>Instructor</button>
+      <div className="flex bg-richblack-800 p-1 gap-x-1 rounded-full max-w-max">
+        <button
+          onClick={() => setAccountType("student")}
+          className={`${
+            accountType === "student"
+              ? "bg-richblack-900 text-richblack-5"
+              : "bg-transparent text-richblack-200 "
+          } py-2 px-5 rounded-full transition-all duration-200`}
+        >
+          Student
+        </button>
+
+        <button
+          onClick={() => setAccountType("instructor")}
+          className={`${
+            accountType === "instructor"
+              ? "bg-richblack-900 text-richblack-5"
+              : "bg-transparent text-richblack-200 "
+          } py-2 px-5 rounded-full transition-all duration-200`}
+        >
+          Instructor
+        </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        {/* First Name and Last Name fields */}
-        <div>
-          <label>
-            <p>First Name <sup>*</sup></p>
+      <form onSubmit={submitHandler}>
+        <div className="flex gap-x-4">
+          <label htmlFor="" className="w-full">
+            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+              First Name <sup className="text-pink-200">*</sup>
+            </p>
             <input
-              type='text'
-              name='firstName'
-              placeholder='Enter your first name'
-              value={formData.firstName}
-              onChange={handleInputChange}
+              type="text"
               required
+              placeholder="Enter First Name"
+              onChange={changeHandler}
+              value={formData.firstName}
+              name="firstName"
+              className="bg-richblack-800 rounded-[0.75rem] w-full p-[12px] text-richblack-5"
             />
           </label>
-          <label>
-            <p>Last Name <sup>*</sup></p>
+
+          <label htmlFor="" className="w-full">
+            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+              Last Name <sup className="text-pink-200">*</sup>
+            </p>
             <input
-              type='text'
-              name='lastName'
-              placeholder='Enter your last name'
-              value={formData.lastName}
-              onChange={handleInputChange}
+              type="text"
               required
+              placeholder="Enter Last Name"
+              onChange={changeHandler}
+              value={formData.lastName}
+              name="lastName"
+              className="bg-richblack-800 rounded-[0.75rem] w-full p-[12px] text-richblack-5"
             />
           </label>
         </div>
 
-        {/* Email Address field */}
-        <label>
-          <p>Email Address <sup>*</sup></p>
+        <label htmlFor="" className="w-full">
+          <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+            Email Address
+            <sup className="text-pink-200">*</sup>
+          </p>
+
           <input
-            type='email'
-            name='email'
-            placeholder='Enter your email'
-            value={formData.email}
-            onChange={handleInputChange}
+            type="email"
             required
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={changeHandler}
+            className="bg-richblack-800 rounded-[0.75rem] w-full p-[12px] text-richblack-5"
+            name="email"
           />
         </label>
 
-        {/* Password and Confirm Password fields */}
-        <div>
-          <label>
-            <p>Create Password <sup>*</sup></p>
+        <div className="flex gap-x-4">
+          <label htmlFor="w-full relative">
+            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+              Create Password
+              <sup className="text-pink-200">*</sup>
+            </p>
+
             <input
-              type={showPassword ? 'text' : 'password'}
-              name='password'
-              placeholder='Enter your password'
-              value={formData.password}
-              onChange={handleInputChange}
+              type={showCreatePass ? "text" : "password"}
               required
+              placeholder="Enter Password"
+              onChange={changeHandler}
+              value={formData.password}
+              name="password"
+              className="bg-richblack-800 rounded-[0.75rem] w-full p-[12px] text-richblack-5"
             />
-            <span onClick={togglePasswordVisibility}>
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            <span
+              onClick={() => setShowCreatePass(!showCreatePass)}
+              className="absolute right-3 top-[38px] cursor-pointer z-10"
+            >
+              {showCreatePass ? (
+                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+              ) : (
+                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+              )}
             </span>
           </label>
-          <label>
-            <p>Confirm Password <sup>*</sup></p>
+
+          <label htmlFor="" className="w-full relative">
+            <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
+              Confirm Password
+              <sup className="text-pink-200">*</sup>
+            </p>
+
             <input
-              type={showPassword ? 'text' : 'password'}
-              name='confirmPassword'
-              placeholder='Confirm your password'
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
+              type={showConfirmPass ? "text" : "password"}
               required
+              placeholder="Confirm Password"
+              onChange={changeHandler}
+              value={formData.confirmPassword}
+              name="confirmPassword"
+              className="bg-richblack-800 rounded-[0.75rem] w-full p-[12px] text-richblack-5"
             />
-            <span onClick={togglePasswordVisibility}>
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+
+            <span
+              onClick={() => setShowConfirmPass(!showConfirmPass)}
+              className="absolute right-3 top-[38px] cursor-pointer z-10"
+            >
+              {showConfirmPass ? (
+                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+              ) : (
+                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+              )}
             </span>
           </label>
         </div>
 
-        {/* Submit Button */}
-        <button type='submit'>Create Account</button>
+        <button className="bg-yellow-50 py-[8px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900 w-full">
+          Create Account
+        </button>
       </form>
     </div>
   );
-}
+};
 
 export default SignupForm;

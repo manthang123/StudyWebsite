@@ -2,7 +2,7 @@ import React from 'react';
 import Template from '../Components/Template';
 import loginImg from '../assets/login.png';
 
-function Login({ setLoggedIn }) { // Destructure setLoggedIn from props
+function Login({ setLoggedIn }) {
   return (
     <div>
       <Template
@@ -11,7 +11,7 @@ function Login({ setLoggedIn }) { // Destructure setLoggedIn from props
         desc2="Education to future-proof your career .."
         image={loginImg}
         formtype="login"
-        setLoggedIn={setLoggedIn} // Pass setLoggedIn correctly
+        setLoggedIn={setLoggedIn} // Ensure setLoggedIn is correctly passed down
       />
     </div>
   );

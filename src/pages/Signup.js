@@ -10,7 +10,7 @@ function Signup({ setLoggedIn }) {
       desc2="Education to future-proof your career."
       image={signupImg}
       formtype="signup"
-      setLoggedIn={setLoggedIn} // Ensure setLoggedIn is correctly passed
+      setLoggedIn={setLoggedIn} // Correct casing for setLoggedIn
     />
   );
 }
