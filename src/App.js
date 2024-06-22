@@ -11,7 +11,7 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   return (
-    <div className="w-screen  bg-richblack-900 flex flex-col"  >
+    <div className="w-screen h-screen bg-richblack-900 flex flex-col"  >
 
       {/* Navbar component with isLoggedIn state and setLoggedIn function */}
       <Navbar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
